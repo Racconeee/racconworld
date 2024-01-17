@@ -1,0 +1,40 @@
+server:
+  port: 8082
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mbti
+    username: root
+    password: 12345678
+  mvc:
+    view:
+      prefix: /static/
+      suffix: .html
+  #    thymeleaf:
+  #      cache: false
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+#    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        default_batch_fetch_size: 1000
+
+
+
+
+logging:
+  level:
+    org.hibernate.sql: debug
+#    org.hibernate.orm.jdbc.bind: debug
+
