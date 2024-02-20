@@ -112,6 +112,7 @@ public class ImgService {
 //            // 파일이 비어있을 때 예외 처리
 //            throw new Exception("Uploaded file is empty.");
 //        }
+        
     }
 
     //로그인에 대한 에러
