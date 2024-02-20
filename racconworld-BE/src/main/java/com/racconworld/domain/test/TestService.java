@@ -27,7 +27,7 @@ public class TestService {
     @Transactional
     public List<ShowTestDto> Test_list(){
         List<Test> testList = testRepository.findAll();
-        List<ShowTestDto> list = testList.stream().map(t -> new ShowTestDto(t.getId(), t.getTestName(), t.getViews(), t.getImg_url()))
+        List<ShowTestDto> list = testList.stream().map(t -> new ShowTestDto(t.getId(), t.getTestName(), t.getViews(), t.getFilename() , t.getFilepath()))
                 .collect(Collectors.toList());
         return list;
     }
@@ -35,7 +35,7 @@ public class TestService {
     //선택한 테스트 Entity -> Dto
     @Transactional
     public SelectTestDto Select_Test(Long id) throws Exception {
-        Optional<Test> optionalTest = testRepository.findTestWithQuestionsAndChoicesById(id);
+        Optional<Test> optionalTest = testRepository.findById(id);
 
         if(optionalTest.isPresent()){
             SelectTestDto dto = SelectTestDto.toDto(optionalTest.get());
@@ -49,7 +49,7 @@ public class TestService {
     public List<ShowTestDto> Test_list2(){
         PageRequest pageRequest = PageRequest.of(0,3, Sort.by(Sort.DEFAULT_DIRECTION, "page-number"));
         Slice<Test> page = testRepository.findAllOrderByViewsAsc(pageRequest);
-        List<ShowTestDto> testlist = page.map( t -> new ShowTestDto(t.getId() , t.getTestName() ,t.getViews(), t.getImg_url())).stream().toList();
+        List<ShowTestDto> testlist = page.map( t -> new ShowTestDto(t.getId() , t.getTestName() ,t.getViews(), t.getFilename(), t.getFilepath())).stream().toList();
 
         return testlist;
     }

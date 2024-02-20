@@ -3,15 +3,13 @@ package com.racconworld.domain.result;
 
 import com.racconworld.domain.test.Test;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter  //  -> 빼기
 @Builder
 public class Result {
 
@@ -22,6 +20,14 @@ public class Result {
     @ManyToOne(fetch = FetchType.LAZY)
     private Test result_to_test;
 
-    private String url;
+    @Column
+    private String filename; // 0202에 변경
+    @Column
+    private String filepath;
 
+    public Result(Test result_to_test,String filepath , String filename ) {
+        result_to_test.getResults().add(this);
+        filename = filename;
+        filepath = filepath;
+    }
 }

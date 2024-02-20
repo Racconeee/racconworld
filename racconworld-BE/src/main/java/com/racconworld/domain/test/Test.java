@@ -37,14 +37,14 @@ public class Test {
     @JsonIgnore
     @OneToMany(mappedBy = "question_to_test",fetch = FetchType.LAZY)
     private List<QuizQuestion> questions = new ArrayList<>();
-    @JsonIgnore
-    @OneToMany(mappedBy = "choice_to_test",fetch = FetchType.LAZY)
-    private List<QuizChoice> choices = new ArrayList<>();
 
     private String testName;            //테스트이름
     private Long views;                 //조회수
     private int question_count;        //질문 개수
-    private String img_url ;                // 테스트 그림
+    @Column
+    private String filename;
+    @Column
+    private String filepath;
 
     //to -> entitiy
     public ShowTestDto toDTO(){
@@ -54,6 +54,14 @@ public class Test {
                 .views(this.views)
 //                .question_count(this.question_count)
                 .build();
+    }
+
+    public Test(String testName, Long views, int question_count, String filename, String filepath) {
+        this.testName = testName;
+        this.views = views;
+        this.question_count = question_count;
+        this.filename = filename;
+        this.filepath = filepath;
     }
 }
 

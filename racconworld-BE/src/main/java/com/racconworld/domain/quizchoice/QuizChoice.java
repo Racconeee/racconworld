@@ -1,6 +1,7 @@
 package com.racconworld.domain.quizchoice;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.racconworld.domain.quizquestion.QuizQuestion;
 import com.racconworld.domain.test.Test;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,11 +23,12 @@ public class QuizChoice {
 
 
     @JsonIgnore
-    @JoinColumn(name = "test_id")
+    @JoinColumn(name = "quizquestion_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Test choice_to_test;
+    private QuizQuestion choice_to_quizquestion;
 
     private String choice;
+    private int choice_score;
 
 
 }

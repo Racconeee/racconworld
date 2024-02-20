@@ -1,5 +1,6 @@
 package com.racconworld.domain.test;
 
+import jakarta.persistence.Column;
 import lombok.*;
 
 @NoArgsConstructor
@@ -12,7 +13,8 @@ public class ShowTestDto {
     private Long test_id;
     private String testName;            //테스트이름
     private Long views;                 //조회수
-    private String img_url;                 //테스트 그림
+    private String filename;
+    private String filepath;
 
 
 

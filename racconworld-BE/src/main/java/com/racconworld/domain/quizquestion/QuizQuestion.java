@@ -1,12 +1,16 @@
 package com.racconworld.domain.quizquestion;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.racconworld.domain.quizchoice.QuizChoice;
 import com.racconworld.domain.test.Test;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -24,6 +28,12 @@ public class QuizQuestion {
     @JoinColumn(name = "test_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Test question_to_test;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "choice_to_quizquestion",fetch = FetchType.LAZY)
+    private List<QuizChoice> choices = new ArrayList<>();
+
+
 
 
 
