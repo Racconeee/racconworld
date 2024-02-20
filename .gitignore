@@ -17,10 +17,12 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-.idea
+*.idea
 *.iws
 *.iml
 *.ipr
+*.yml
+.DS_Store
 ".gitignore" 39L, 480B
 HELP.md
 .gradle
