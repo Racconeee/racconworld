@@ -5,6 +5,7 @@ import com.racconworld.domain.quizchoice.QuizChoiceRepository;
 import com.racconworld.domain.quizquestion.QuizQuestionRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.engine.jdbc.batch.spi.Batch;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
@@ -32,27 +33,17 @@ public class TestService {
         return list;
     }
 
-    //선택한 테스트 Entity -> Dto
     @Transactional
-    public SelectTestDto Select_Test(Long id) throws Exception {
-        Optional<Test> optionalTest = testRepository.findById(id);
+    public List<ShowTestDto> getTestListByPage(int pageNumber){
+        int pageSize = (pageNumber == 0 ) ? 12 : 6 ; // 페이지당 아이템 수
 
-        if(optionalTest.isPresent()){
-            SelectTestDto dto = SelectTestDto.toDto(optionalTest.get());
-            return dto;
-        }else {
-            throw new Exception("Test가 없습니다.");
-        }
-    }
-
-    @Transactional
-    public List<ShowTestDto> Test_list2(){
-        PageRequest pageRequest = PageRequest.of(0,3, Sort.by(Sort.DEFAULT_DIRECTION, "page-number"));
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "id"));
         Slice<Test> page = testRepository.findAllOrderByViewsAsc(pageRequest);
         List<ShowTestDto> testlist = page.map( t -> new ShowTestDto(t.getId() , t.getTestName() ,t.getViews(), t.getFilename(), t.getFilepath())).stream().toList();
 
         return testlist;
     }
+
 
 
 }

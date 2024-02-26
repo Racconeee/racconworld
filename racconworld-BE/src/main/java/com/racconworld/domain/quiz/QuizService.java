@@ -34,23 +34,28 @@ public class QuizService {
     public ShowQuizDto show_quiz(Long id) throws Exception {
         Test test = find_test(id); //repository로 가져와서 조인패치로 성능 최적화 해보자
         List<QuizQuestion> questions = quizQuestionRepository.findQuestionsWithChoicesByTestId(test.getId());
+//
+        //빌더 자체를 Dto안에 넣음
+//        List<ShowQuizDto.ShowQuizQuestionDto> quizQuestionDtos = questions.stream()
+//                .map(question -> ShowQuizDto.ShowQuizQuestionDto.builder()
+//                        .quiz_question(question.getQuiz_question())
+//                        .choices(question.getChoices())
+//                        .build())
+//                .collect(Collectors.toList());
+//
+//
+//        ShowQuizDto dto = ShowQuizDto.builder()
+//                .testName(test.getTestName())
+//                .filepath(test.getFilepath())
+//                .views(test.getViews())
+//                .question_count(test.getQuestion_count())
+//                .quizQuestions(quizQuestionDtos)
+//                .build();
 
-        List<ShowQuizDto.ShowQuizQuestionDto> quizQuestionDtos = questions.stream()
-                .map(question -> ShowQuizDto.ShowQuizQuestionDto.builder()
-                        .quiz_question(question.getQuiz_question())
-                        .choices(question.getChoices())
-                        .build())
-                .collect(Collectors.toList());
+        return ShowQuizDto.toDto(test, questions);
 
-
-        ShowQuizDto dto = ShowQuizDto.builder()
-                .testName(test.getTestName())
-                .views(test.getViews())
-                .question_count(test.getQuestion_count())
-                .quizQuestions(quizQuestionDtos)
-                .build();
-
-        return dto;
+//    }
+//        return dto;
 
 
     }

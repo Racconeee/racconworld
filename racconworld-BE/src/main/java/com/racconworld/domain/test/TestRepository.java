@@ -25,4 +25,7 @@ public interface TestRepository extends JpaRepository<Test , Long> {
 //    @Query("SELECT t FROM Test t JOIN FETCH t.questions q JOIN FETCH q.choices WHERE t.id = :id")
     Test findByIdWithQuestions(@Param("id") Long id);
 
+    @Query("SELECT t FROM Test t WHERE t.filepath = :filepath")
+    Optional<Test> findByFilepath(@Param("filepath") String filepath);
+
 }

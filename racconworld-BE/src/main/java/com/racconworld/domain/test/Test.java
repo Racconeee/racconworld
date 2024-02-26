@@ -56,9 +56,9 @@ public class Test {
                 .build();
     }
 
-    public Test(String testName, Long views, int question_count, String filename, String filepath) {
+    public Test(String testName , int question_count, String filename, String filepath) {
         this.testName = testName;
-        this.views = views;
+        this.views = 0L;
         this.question_count = question_count;
         this.filename = filename;
         this.filepath = filepath;

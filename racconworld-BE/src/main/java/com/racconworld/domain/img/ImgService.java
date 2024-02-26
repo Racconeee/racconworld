@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -35,36 +34,36 @@ public class ImgService {
 
     //동작원리
     /*
-
-     *
+     * 테스트 생성하는 메소드 Test O result X
+     * filepath -> 이미지 파일 경로
+     * filepath -> 테스트마다 메인 이미지 위치
+     * 현재 저장되어있지 않은 새로운 테스트만 생성 가능하다
+     * 저장되어 있다면 예외처리
+     * 나중에 filename 제거하자 DB 자체에서 삭제
      * */
     @Transactional
-    public void upload(MultipartFile file, String filename, Long file_number) throws Exception {
-        //  아래 링크된 파일에 저장을 하게된다
-        String filepath = fileDir + file_number;
+    public void upload(MultipartFile file, int question_count, String test_name, Long test_id) throws Exception {
 
-//        String fileName = file.getOriginalFilename(); 전송된 파일의 이름
+        String filepath = fileDir + test_id;
+
+        String filepath_main = filepath + "/main";
+
+        Optional<Test> byId = testRepository.findByFilepath(filepath_main);
+        if(byId.isPresent()){
+            throw new CustomException("현재 저장되어 있는 이미지가 존재합니다.");
+        }else{
+            Test test = new Test(test_name, 4 , "이 컬럼 삭제해야됨" , filepath_main);
+            testRepository.save(test);
+        }
+
+        //  아래 링크된 파일에 저장을 하게된다
+
 
         //부모 파일이 없다면 부모 파일 생성
-//        createDir(filepath);
+        createDir(filepath);
 //        //파일 저장하는 메소드
-//        savefile(file, filename, filepath);
+        savefile(file,"main", filepath);
 
-
-        Optional<Test> byId = testRepository.findById(file_number);
-        if (byId.isPresent()) {
-            // 이미 같은 projectPath가 DB에 존재하는지 확인
-//            if (resultRepository.existsByFilepath(filepath)) {
-//                // 이미 존재한다면 예외 발생
-//                throw new Exception("Duplicate projectPath: " + filepath);
-//            }
-
-            Result result = new Result(byId.get(), filepath, filename);
-            resultRepository.save(result);
-        } else {
-            // 파일이 비어있을 때 예외 처리
-            throw new Exception("Uploaded file is empty.");
-        }
     }
 
     // 저장 방식
@@ -83,37 +82,7 @@ public class ImgService {
             Files.createDirectories(imagePath);
         }
     }
-//
-//    @Transactional
-//    public List<String> picture_list() throws Exception {
-//        Optional<Test> byId = testRepository.findById(1L);
-//
-//        List<Result> results = byId.get().getResults();
-//        List<String> picutre_lists = new ArrayList<>();
-//
-//        for ( Result resulte : results ){
-//            picutre_lists.add(resulte.getFilepath());
-//        }
-//        return picutre_lists;
-//    }
 
-
-    //test 저장하기
-    @Transactional
-    public void Test_upload(MultipartFile file, String filename, Long file_number) throws Exception {
-        //  아래 링크된 파일에 저장을 하게된다
-        String filepath = fileDir + file_number;
-
-//        Optional<Test> byId = testRepository.findById(file_number);
-//        if (byId.isPresent()) {
-        Test test = new Test("mbti", 0L, 0, filename, filepath);
-        testRepository.save(test);
-//        } else {
-//            // 파일이 비어있을 때 예외 처리
-//            throw new Exception("Uploaded file is empty.");
-//        }
-        
-    }
 
     //로그인에 대한 에러
     // 1.이메일이 존재하지않을떄

@@ -16,12 +16,5 @@ import java.util.List;
 public class QuizQuestionController {
 
 
-    private final QuizQuestionService quizQuestionService;
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<List<ShowQuizQuestionDto>> quiz(@PathVariable Long id) throws Exception {
-//
-//        return ResponseEntity.ok().body(quizQuestionService.quiz(id));
-//    }
 
 }
