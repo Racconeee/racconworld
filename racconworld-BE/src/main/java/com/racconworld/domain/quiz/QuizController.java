@@ -1,6 +1,5 @@
 package com.racconworld.domain.quiz;
 
-import com.racconworld.domain.quizchoice.QuizChoice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

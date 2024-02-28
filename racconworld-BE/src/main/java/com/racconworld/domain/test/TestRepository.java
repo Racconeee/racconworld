@@ -28,4 +28,6 @@ public interface TestRepository extends JpaRepository<Test , Long> {
     @Query("SELECT t FROM Test t WHERE t.filepath = :filepath")
     Optional<Test> findByFilepath(@Param("filepath") String filepath);
 
+    @Query("SELECT t FROM Test t JOIN FETCH t.results WHERE t.id = :test_id")
+    Optional<Test> findByIdAAndResults(Long test_id);
 }

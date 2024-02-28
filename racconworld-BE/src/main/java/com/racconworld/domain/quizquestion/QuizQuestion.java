@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,16 +35,18 @@ public class QuizQuestion {
     private List<QuizChoice> choices = new ArrayList<>();
 
 
-
-
-
     private String quiz_question;     //퀴즈 질문 EX)1번 친구만나는데 지갑을 두고온 나는 ?
-
     public String getQuiz_question() {
         return quiz_question;
     }
 
+    public QuizQuestion( Test testEntity,String quiz_question) {
+        this.question_to_test = testEntity;
+        this.quiz_question = quiz_question;
+    }
 
+    public void addChoice(QuizChoice choice){
+        choices.add(choice);
 
-
+    }
 }

@@ -1,16 +1,9 @@
-package com.racconworld.domain.img;
+package com.racconworld.domain.upload.img;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @RestController
 @RequiredArgsConstructor
@@ -41,17 +34,18 @@ public class ImgController {
                               @RequestParam Long file_number) throws Exception{
         imgService.img_login(admin_email , admin_pw);
         imgService.upload(file,question_count, test_name , file_number);
-        return "성공";
+        return "test가 저장되었습니다.";
     }
 
 
-    @PostMapping("/upload2")
+    @PostMapping("result/upload")
     public String upload2(@RequestParam("file") MultipartFile file,
-                         @RequestParam int question_count,
-                         @RequestParam String test_name,
-                         @RequestParam Long file_number) throws Exception{
-        imgService.upload(file,question_count, test_name , file_number);
-        return "성공";
+                          @RequestParam Long test_id,
+                          @RequestParam String score,
+                          @RequestParam String admin_email,
+                          @RequestParam String admin_pw) throws Exception{
+        imgService.img_login(admin_email , admin_pw);
+        imgService.result_upload(file,test_id ,score);
+        return "result가 저장되었습니다.";
     }
-
 }

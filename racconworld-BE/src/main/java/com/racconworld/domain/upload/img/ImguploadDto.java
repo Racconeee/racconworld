@@ -1,4 +1,4 @@
-package com.racconworld.domain.img;
+package com.racconworld.domain.upload.img;
 
 import com.racconworld.domain.test.Test;
 import lombok.Data;

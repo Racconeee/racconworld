@@ -13,7 +13,6 @@ public class ShowTestDto {
     private Long test_id;
     private String testName;            //테스트이름
     private Long views;                 //조회수
-    private String filename;
     private String filepath;
 
 

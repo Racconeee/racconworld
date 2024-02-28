@@ -21,13 +21,14 @@ public class Result {
     private Test result_to_test;
 
     @Column
-    private String filename; // 0202에 변경
-    @Column
     private String filepath;
+    @Column
+    private String score;
 
-    public Result(Test result_to_test,String filepath , String filename ) {
+    public Result(Test result_to_test,String filepath , String score) {
+        this.result_to_test = result_to_test;
+        this.filepath = filepath;
+        this.score = score;
         result_to_test.getResults().add(this);
-        filename = filename;
-        filepath = filepath;
     }
 }

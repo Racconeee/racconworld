@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 
 @Entity
@@ -30,5 +31,11 @@ public class QuizChoice {
     private String choice;
     private int choice_score;
 
+    public QuizChoice( QuizQuestion question ,String choice , int choice_score) {
+        this.choice_to_quizquestion = question;
+        this.choice = choice;
+        this.choice_score = choice_score;
+        this.choice_to_quizquestion.getChoices().add(this);
+    }
 
 }

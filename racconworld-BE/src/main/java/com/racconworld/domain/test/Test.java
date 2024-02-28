@@ -42,8 +42,6 @@ public class Test {
     private Long views;                 //조회수
     private int question_count;        //질문 개수
     @Column
-    private String filename;
-    @Column
     private String filepath;
 
     //to -> entitiy
@@ -56,12 +54,15 @@ public class Test {
                 .build();
     }
 
-    public Test(String testName , int question_count, String filename, String filepath) {
+    public Test(String testName , int question_count, String filepath) {
         this.testName = testName;
         this.views = 0L;
         this.question_count = question_count;
-        this.filename = filename;
         this.filepath = filepath;
+    }
+
+    public void addQuiz_question(QuizQuestion quizQuestion){
+        questions.add(quizQuestion);
     }
 }
 

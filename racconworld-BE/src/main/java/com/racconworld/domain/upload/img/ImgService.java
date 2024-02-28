@@ -1,4 +1,4 @@
-package com.racconworld.domain.img;
+package com.racconworld.domain.upload.img;
 
 import com.racconworld.domain.admin.Admin;
 import com.racconworld.domain.admin.AdminRepository;
@@ -52,7 +52,7 @@ public class ImgService {
         if(byId.isPresent()){
             throw new CustomException("현재 저장되어 있는 이미지가 존재합니다.");
         }else{
-            Test test = new Test(test_name, 4 , "이 컬럼 삭제해야됨" , filepath_main);
+            Test test = new Test(test_name, 4 , filepath_main);
             testRepository.save(test);
         }
 
@@ -107,4 +107,41 @@ public class ImgService {
             throw new MemberException(MemberErrorCode.PASSWORD_MISMATCH_ERROR);
         }
     }
+    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    // result
+    /*
+    * result 결과 이미지 등록 메소드
+    * 예외처리
+    * 1.이미 이미지가 존재하는 경우
+    * 2.Test가 존재하지 않는경우
+    * */
+    public void result_upload(MultipartFile file, Long test_id , String score) throws IOException {
+
+        String filepath = fileDir + test_id;
+        String filepath_result = fileDir + test_id +"/" + score;
+
+        Test byId = testRepository.findById(test_id).orElseThrow( () -> new CustomException("해당하는 test가 존재하지않습니다."));
+
+
+
+        //test의 main 페이지가 존재하지 않는다면 예외 처리
+        //사실 test가 존재하지 않으면 파일 자체가 없는거여서 로직에 안걸리지만
+        //테스트후 제거 할지 말지 정해보자 리펙토링 가능성 있음
+        if (!Files.exists(Path.of(filepath))) {
+            throw new CustomException("현재 Test에 해당하는 이미지 파일이 존재하지않습니다.");
+        }
+
+        Optional<Result> result_Optional = resultRepository.findByFilepath(filepath_result);
+        if ( result_Optional.isPresent()){
+            throw new CustomException("현재 해당하는 이미지 파일이 있습니다.");
+        }
+
+        resultRepository.save(new Result(byId, filepath + "/" +score , score));
+
+        //문제가 없다면 파일 생성
+        savefile(file , score, filepath);
+
+    }
+
+
 }

@@ -28,7 +28,7 @@ public class TestService {
     @Transactional
     public List<ShowTestDto> Test_list(){
         List<Test> testList = testRepository.findAll();
-        List<ShowTestDto> list = testList.stream().map(t -> new ShowTestDto(t.getId(), t.getTestName(), t.getViews(), t.getFilename() , t.getFilepath()))
+        List<ShowTestDto> list = testList.stream().map(t -> new ShowTestDto(t.getId(), t.getTestName(), t.getViews(), t.getFilepath()))
                 .collect(Collectors.toList());
         return list;
     }
@@ -39,7 +39,7 @@ public class TestService {
 
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "id"));
         Slice<Test> page = testRepository.findAllOrderByViewsAsc(pageRequest);
-        List<ShowTestDto> testlist = page.map( t -> new ShowTestDto(t.getId() , t.getTestName() ,t.getViews(), t.getFilename(), t.getFilepath())).stream().toList();
+        List<ShowTestDto> testlist = page.map( t -> new ShowTestDto(t.getId() , t.getTestName() ,t.getViews(), t.getFilepath())).stream().toList();
 
         return testlist;
     }
