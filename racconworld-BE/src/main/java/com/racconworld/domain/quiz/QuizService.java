@@ -1,21 +1,18 @@
 package com.racconworld.domain.quiz;
 
-import com.racconworld.domain.admin.Admin;
-import com.racconworld.domain.admin.AdminRepository;
-import com.racconworld.domain.quizchoice.QuizChoice;
 import com.racconworld.domain.quizchoice.QuizChoiceRepository;
 import com.racconworld.domain.quizquestion.QuizQuestion;
 import com.racconworld.domain.quizquestion.QuizQuestionRepository;
 import com.racconworld.domain.test.Test;
 import com.racconworld.domain.test.TestRepository;
 import com.racconworld.global.exception.CustomException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,13 +28,15 @@ public class QuizService {
     //Test qeury , Question + Choice Query로 2개로 쿼리를 나누어서 가져옴
     //사용시기 : 테스트 클릭후 테스트를 진행할때 전체적인 정보 얻음
 
+    @Transactional
     public ShowQuizDto show_quiz(Long id) throws Exception {
         Test test = find_test(id); //repository로 가져와서 조인패치로 성능 최적화 해보자
         List<QuizQuestion> questions = quizQuestionRepository.findQuestionsWithChoicesByTestId(test.getId());
-//
+        updateTestByViews(id);
+
         //빌더 자체를 Dto안에 넣음
 //        List<ShowQuizDto.ShowQuizQuestionDto> quizQuestionDtos = questions.stream()
-//                .map(question -> ShowQuizDto.ShowQuizQuestionDto.builder()
+//                .map(quㄷestion -> ShowQuizDto.ShowQuizQuestionDto.builder()
 //                        .quiz_question(question.getQuiz_question())
 //                        .choices(question.getChoices())
 //                        .build())
@@ -54,10 +53,11 @@ public class QuizService {
 
         return ShowQuizDto.toDto(test, questions);
 
-//    }
-//        return dto;
 
+    }
 
+    private void updateTestByViews(Long id){
+        testRepository.updateTestByViews(id);
     }
 
     private Test find_test(Long id) {

@@ -31,7 +31,7 @@ public class QuizQuestion {
     private Test question_to_test;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "choice_to_quizquestion",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "choice_to_quizquestion",fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     private List<QuizChoice> choices = new ArrayList<>();
 
 

@@ -46,4 +46,10 @@ public class QuizUploadService {
         return "Quiz 질문과 선택지가 성공적으로 저장 되었습니다.";
     }
 
+
+    public String remove_test(Long test_id){
+        testRepository.deleteById(test_id);
+        return  "삭제완료";
+    }
+
 }

@@ -2,7 +2,9 @@ package com.racconworld.domain.test;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -30,4 +32,11 @@ public interface TestRepository extends JpaRepository<Test , Long> {
 
     @Query("SELECT t FROM Test t JOIN FETCH t.results WHERE t.id = :test_id")
     Optional<Test> findByIdAAndResults(Long test_id);
+
+    @Modifying
+    @Query("update Test t set t.views = t.views + 1 where t.id = :id")
+    int updateTestByViews(Long id);
+
+
+    void deleteById(Long id);
 }

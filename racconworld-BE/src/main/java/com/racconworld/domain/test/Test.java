@@ -32,10 +32,10 @@ public class Test {
     //  검색 , 삽입 부분에서 HashSet는 해시기반의 데이터 구조로 O(1) 시간 복잡도를 가지게 된다.
     // -> 따라서 HashSet을 사용하자
     @JsonIgnore
-    @OneToMany(mappedBy = "result_to_test",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "result_to_test",fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     private List<Result> results = new ArrayList<>();
     @JsonIgnore
-    @OneToMany(mappedBy = "question_to_test",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question_to_test",fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     private List<QuizQuestion> questions = new ArrayList<>();
 
     private String testName;            //테스트이름
