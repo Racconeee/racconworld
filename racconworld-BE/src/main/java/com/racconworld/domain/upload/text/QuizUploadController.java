@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/text")
+@RequestMapping("/admin/text")
 public class QuizUploadController {
 
     private final QuizUploadService quizUploadService;
@@ -19,10 +19,8 @@ public class QuizUploadController {
     //question -> test 연관관계 매핑 + 성능 최적화
     @PostMapping("/quiz/upload")
     public ResponseEntity<String> quiz_upload(@RequestBody List<QuizUploadDto> dto,
-                                              @RequestParam Long test_id,
-                                              @RequestParam String admin_email,
-                                              @RequestParam String admin_pw) throws Exception {
-        imgService.img_login(admin_email , admin_pw);
+                                              @RequestParam Long test_id) throws Exception {
+//        imgService.img_login(admin_email , admin_pw);
         System.out.println(test_id);
         return ResponseEntity.ok(quizUploadService.quiz_upload(dto ,test_id));
     }

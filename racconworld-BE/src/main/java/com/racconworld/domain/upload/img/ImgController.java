@@ -1,5 +1,6 @@
 package com.racconworld.domain.upload.img;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -7,11 +8,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/img")
+@RequestMapping("/admin/img")
 public class ImgController {
 
     private final ImgService imgService;
-
 
 
 //
@@ -27,12 +27,10 @@ public class ImgController {
     //DTO로 변환하고 vaild 로 검증 하기
     @PostMapping("/test/upload")
     public String test_upload(@RequestParam("file") MultipartFile file,
-                         @RequestParam String admin_email,
-                         @RequestParam String admin_pw,
                          @RequestParam int question_count,
                               @RequestParam String test_name,
                               @RequestParam Long file_number) throws Exception{
-        imgService.img_login(admin_email , admin_pw);
+//        imgService.img_login(admin_email , admin_pw);
         imgService.upload(file,question_count, test_name , file_number);
         return "test가 저장되었습니다.";
     }
@@ -41,10 +39,8 @@ public class ImgController {
     @PostMapping("result/upload")
     public String upload2(@RequestParam("file") MultipartFile file,
                           @RequestParam Long test_id,
-                          @RequestParam String score,
-                          @RequestParam String admin_email,
-                          @RequestParam String admin_pw) throws Exception{
-        imgService.img_login(admin_email , admin_pw);
+                          @RequestParam String score) throws Exception{
+//        imgService.img_login(admin_email , admin_pw);
         imgService.result_upload(file,test_id ,score);
         return "result가 저장되었습니다.";
     }

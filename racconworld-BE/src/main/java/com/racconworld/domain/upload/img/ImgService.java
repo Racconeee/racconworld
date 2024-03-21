@@ -1,7 +1,6 @@
 package com.racconworld.domain.upload.img;
 
-import com.racconworld.domain.admin.Admin;
-import com.racconworld.domain.admin.AdminRepository;
+import com.racconworld.domain.user.UserRepository;
 import com.racconworld.domain.result.Result;
 import com.racconworld.domain.result.ResultRepository;
 import com.racconworld.domain.test.Test;
@@ -26,7 +25,7 @@ public class ImgService {
 
     private final TestRepository testRepository;
     private final ResultRepository resultRepository;
-    private final AdminRepository adminRepository;
+    private final UserRepository adminRepository;
     //
     @Value("${file.dir}")
     private String fileDir;
@@ -87,34 +86,35 @@ public class ImgService {
     //로그인에 대한 에러
     // 1.이메일이 존재하지않을떄
     // 2.비밀번호가 맞지않을때
-    public void img_login(String email, String pw) throws Exception {
+//    public void img_login(String email, String pw) throws Exception {
+//
+//        if(email == null || pw ==null){
+//            throw new CustomException("Email , pw 값이 입력되지 않았습니다.");
+//        }
+//
+//        Optional<User> byEmail = adminRepository.findByEmail(email);
+//        //아이디가 맞지않는다면 예외 발생
+//        Admin admin = byEmail.orElseThrow(() -> new CustomException("유효하지않은 이메일입니다."));
+//
+//        System.out.println(byEmail);
+//        System.out.println(admin);
+//        //Http api 로 들어온 PW 값과 DB의 pw 의 값을 비교해서
+//        //같지않는다면 비밀번호가 맞지않는다는 예와
+//        if (admin.getPw().equals(pw)) {
+//            return;
+//        } else {
+//            throw new MemberException(MemberErrorCode.PASSWORD_MISMATCH_ERROR);
+//        }
+//    }
 
-        if(email == null || pw ==null){
-            throw new CustomException("Email , pw 값이 입력되지 않았습니다.");
-        }
-
-        Optional<Admin> byEmail = adminRepository.findByEmail(email);
-        //아이디가 맞지않는다면 예외 발생
-        Admin admin = byEmail.orElseThrow(() -> new CustomException("유효하지않은 이메일입니다."));
-
-        System.out.println(byEmail);
-        System.out.println(admin);
-        //Http api 로 들어온 PW 값과 DB의 pw 의 값을 비교해서
-        //같지않는다면 비밀번호가 맞지않는다는 예와
-        if (admin.getPw().equals(pw)) {
-            return;
-        } else {
-            throw new MemberException(MemberErrorCode.PASSWORD_MISMATCH_ERROR);
-        }
-    }
     // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     // result
     /*
-    * result 결과 이미지 등록 메소드
-    * 예외처리
-    * 1.이미 이미지가 존재하는 경우
-    * 2.Test가 존재하지 않는경우
-    * */
+     * result 결과 이미지 등록 메소드
+     * 예외처리
+     * 1.이미 이미지가 존재하는 경우
+     * 2.Test가 존재하지 않는경우
+     * */
     public void result_upload(MultipartFile file, Long test_id , String score) throws IOException {
 
         String filepath = fileDir + test_id;
@@ -142,6 +142,5 @@ public class ImgService {
         savefile(file , score, filepath);
 
     }
-
 
 }
