@@ -1,6 +1,7 @@
 package com.racconworld.domain.test;
 
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @NoArgsConstructor
@@ -14,6 +15,7 @@ public class ShowTestDto {
     private String testName;            //테스트이름
     private Long views;                 //조회수
     private String filepath;
+    private String filedownload;
 
 
 

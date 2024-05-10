@@ -42,7 +42,9 @@ public class Test {
     private Long views;                 //조회수
     private int question_count;        //질문 개수
     @Column
-    private String filepath;
+    private String filepath;    //파일 저장경로
+    @Column
+    private String filedownload;   //파일 다운로드 경로
 
     //to -> entitiy
     public ShowTestDto toDTO(){
@@ -54,11 +56,12 @@ public class Test {
                 .build();
     }
 
-    public Test(String testName , int question_count, String filepath) {
+    public Test(String testName , int question_count, String filepath , String filedownload) {
         this.testName = testName;
         this.views = 0L;
         this.question_count = question_count;
         this.filepath = filepath;
+        this.filedownload = filedownload;
     }
 
     public void addQuiz_question(QuizQuestion quizQuestion){

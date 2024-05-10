@@ -27,7 +27,7 @@ public class ImgService {
     private final ResultRepository resultRepository;
     private final UserRepository adminRepository;
     //
-    @Value("${file.dir}")
+    @Value("${image_file.dir}")
     private String fileDir;
 
 
@@ -47,11 +47,13 @@ public class ImgService {
 
         String filepath_main = filepath + "/main";
 
+        String filedownload = "/q/" + test_id+"/main";
+
         Optional<Test> byId = testRepository.findByFilepath(filepath_main);
         if(byId.isPresent()){
             throw new CustomException("현재 저장되어 있는 이미지가 존재합니다.");
         }else{
-            Test test = new Test(test_name, 4 , filepath_main);
+            Test test = new Test(test_name, question_count , filepath_main,filedownload);
             testRepository.save(test);
         }
 
@@ -119,6 +121,7 @@ public class ImgService {
 
         String filepath = fileDir + test_id;
         String filepath_result = fileDir + test_id +"/" + score;
+        String filedownload = "/a/" + test_id+"/main";
 
         Test byId = testRepository.findById(test_id).orElseThrow( () -> new CustomException("해당하는 test가 존재하지않습니다."));
 
@@ -136,7 +139,7 @@ public class ImgService {
             throw new CustomException("현재 해당하는 이미지 파일이 있습니다.");
         }
 
-        resultRepository.save(new Result(byId, filepath + "/" +score , score));
+        resultRepository.save(new Result(byId, filepath + "/" +score , score, filedownload));
 
         //문제가 없다면 파일 생성
         savefile(file , score, filepath);

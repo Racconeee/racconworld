@@ -35,7 +35,7 @@ public class ResultService {
 
         Result result = filteredResult.orElseThrow(() -> new CustomException("점수에 대한 파일이 존재하지않습니다."));
 
-        ShowResultDto dto = new ShowResultDto(result.getFilepath());
+        ShowResultDto dto = new ShowResultDto(result.getFilepath() , result.getFiledownload());
 
         return dto;
     }

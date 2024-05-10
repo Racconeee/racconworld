@@ -21,12 +21,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role roles;
 
-    public User(String username, String password) {
+    public User(String username, String password , Role roles) {
         this.username = username;
         this.password = password;
-    }
-
-    public void setRoles(Role roles) {
         this.roles = roles;
     }
 

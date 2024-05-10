@@ -23,12 +23,15 @@ public class Result {
     @Column
     private String filepath;
     @Column
+    private String filedownload;
+    @Column
     private String score;
 
-    public Result(Test result_to_test,String filepath , String score) {
+    public Result(Test result_to_test,String filepath , String score,String filedownload) {
         this.result_to_test = result_to_test;
         this.filepath = filepath;
         this.score = score;
+        this.filedownload = filedownload;
         result_to_test.getResults().add(this);
     }
 }

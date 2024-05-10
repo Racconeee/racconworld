@@ -20,8 +20,6 @@ public class QuizUploadController {
     @PostMapping("/quiz/upload")
     public ResponseEntity<String> quiz_upload(@RequestBody List<QuizUploadDto> dto,
                                               @RequestParam Long test_id) throws Exception {
-//        imgService.img_login(admin_email , admin_pw);
-        System.out.println(test_id);
         return ResponseEntity.ok(quizUploadService.quiz_upload(dto ,test_id));
     }
 

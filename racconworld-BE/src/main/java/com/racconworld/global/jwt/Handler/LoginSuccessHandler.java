@@ -33,12 +33,12 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         log.info("@222@");
         String username = extractUsername(authentication);
         System.out.println(username);
-        String accessToken = jwtService.createAccessToken(username); //username 클레임을 가지는 JWT 토큰을 생성
-        String refreshToken = jwtService.createRefreshToken(); // JwtService의 createRefreshToken을 사용하여 RefreshToken 발급
+        String accessToken = jwtService.createAccessToken(username);
+        String refreshToken = jwtService.createRefreshToken();
 
         System.out.println(accessToken);
         System.out.println(refreshToken);
-        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken); // 응답 헤더에 AccessToken, RefreshToken 실어서 응답
+        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
         userRepository.findByUsername(username)
                 .ifPresent(user -> {
                     user.updateRefreshToken(refreshToken);

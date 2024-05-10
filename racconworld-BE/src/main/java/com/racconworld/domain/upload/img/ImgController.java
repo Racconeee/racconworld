@@ -1,6 +1,7 @@
 package com.racconworld.domain.upload.img;
 
-import lombok.Getter;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +27,7 @@ public class ImgController {
     //이후 로그인이 되었다면 이미지 업로드를 시작하게 된다.
     //DTO로 변환하고 vaild 로 검증 하기
     @PostMapping("/test/upload")
+    @Operation(summary = "Test image 업로드 ", description = "")
     public String test_upload(@RequestParam("file") MultipartFile file,
                          @RequestParam int question_count,
                               @RequestParam String test_name,

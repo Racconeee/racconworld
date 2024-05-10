@@ -9,8 +9,10 @@ import lombok.Getter;
 public class ShowResultDto {
 
     private String filepath;
+    private String fileDownload;
 
-    public ShowResultDto(String filepath) {
+    public ShowResultDto(String filepath ,String fileDownload) {
         this.filepath = filepath;
+        this.fileDownload = fileDownload;
     }
 }
