@@ -2,8 +2,8 @@ package com.racconworld.domain.quiz;
 
 import com.racconworld.domain.quizchoice.QuizChoice;
 import com.racconworld.domain.quizquestion.QuizQuestion;
-import com.racconworld.domain.test.SelectTestDto;
 import com.racconworld.domain.test.Test;
+import jakarta.validation.Valid;
 import lombok.Builder;
 import lombok.Data;
 
@@ -23,6 +23,7 @@ public class ShowQuizDto {
 
     @Data
     @Builder
+    @Valid
     public static class ShowQuizQuestionDto{
         private String quiz_question;
         private List<QuizChoice> choices;

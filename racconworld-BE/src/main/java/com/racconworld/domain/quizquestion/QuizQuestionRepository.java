@@ -15,8 +15,4 @@ public interface QuizQuestionRepository extends JpaRepository<QuizQuestion, Long
     List<QuizQuestion> findQuestionsWithChoicesByTestId(@Param("testId") Long testId);
 
 
-
-
-
-
 }

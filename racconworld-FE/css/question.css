@@ -1,0 +1,141 @@
+.question-child {
+    position: absolute;
+    top: 90px;
+    left: 232px;
+    background-color: rgba(217, 217, 217, 0);
+    border: 1px dashed #fff;
+    box-sizing: border-box;
+    width: 70vw;
+    height: 688px;
+}
+.home {
+    position: absolute;
+    width: 103.62%;
+    top: 5.56%;
+    left: 0%;
+    letter-spacing: 0.2px;
+    display: flex;
+    align-items: center;
+}
+.item-link {
+    width: 58px;
+    position: relative;
+    height: 18px;
+}
+.nav {
+    position: absolute;
+    bottom: 984px;
+    left: 720px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+.language-image {
+    width: 24px;
+    position: relative;
+    height: 24px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.en {
+    position: relative;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+}
+.language {
+    position: absolute;
+    top: 3vh;
+    left: 89vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 7px;
+    font-size: 16px;
+    color: #616161;
+}
+.apple-tree {
+    position: absolute;
+    top: 22px;
+    left: 40px;
+    letter-spacing: 0.2px;
+    font-family: 'Zen Dots';
+}
+.questionLeftContainer {
+    position: absolute;
+    top: 630px;
+    left: 35vw;
+    display: flex;
+    width :auto;
+    justify-content:flex-start;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.questionInner {
+    position: absolute;
+    top: 720px;
+    left: 618px;
+    background-color: rgba(217, 217, 217, 0);
+    border: 1px dashed #fff;
+    box-sizing: border-box;
+    width: 205px;
+    height: 61px;
+    cursor: pointer;
+
+}
+.questionRight {
+    position: absolute;
+    top: 720px;
+    left: 906px;
+    background-color: rgba(217, 217, 217, 0);
+    border: 1px dashed #fff;
+    box-sizing: border-box;
+    width: 205px;
+    height: 61px;
+    cursor: pointer;
+
+}
+.gobackhome {
+    position: absolute;
+    top: 82vh;
+    left: 88vw;
+    width: 101px;
+    height: 73px;
+    object-fit: cover;
+    cursor: pointer;
+}
+.question {
+
+    text-align: left;
+    font-size: 14px;
+    color: #fff;
+    font-family: Inter;
+}
+
+.quiz_question{
+    text-align: center;
+    padding-top: 70px;
+    font-style: bold;
+}
+.questionLeft{
+    width: 200px;
+    height: 80px;
+    border: 1px dashed white;
+    text-align: center;
+    align-items: center;
+    position: relative;
+    display: flex;
+    margin-right: 30px;
+}
+.choice{
+    text-align: center;
+    width: 200px;
+    height: 80px;
+    line-height: 80px;
+    position: relative;
+}
+.test-name{
+    text-align: center;
+    font-size: 30px;
+}

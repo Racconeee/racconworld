@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen Dots:wght@400&display=swap" />
+</head>
+<body>
+    <div class="main">
+        <div class="nav">
+            <div class="item-link">
+                <b class="home">Home</b>
+            </div>
+        </div>
+        <div class="nav">
+            <div class="item-link">
+                <b class="home">Home</b>
+            </div>
+        </div>
+        <div class="language">
+            <img class="language-image" alt="" src="./img/language.png">
+            <b class="en">En</b>
+        </div>
+        <div class="apple-tree">Apple Tree</div>
+        <div class="more_collection">
+            <div class="collection" id="collectionContainer">
+                <!-- js로 카드 들어올 걸? -->
+            </div>
+        </div>
+        <div class="big_box">
+            <img class="tree-icon" alt="" src="./img/tree.png">
+            
+                <div class="new">NEW</div>
+                <div class="best-10">BEST 5</div>
+                <div class="check-your-type-container">
+                    <p class="blank-line">&nbsp;</p>
+                    <p class="blank-line">Check Your<br>Type Now!</p>
+                </div>
+                <div class="apple_box">
+
+                    <div class="apple-container" id="apple-container1">
+                        <img class="appleIcon3" alt="" src="./img/apple.png" id="image3">
+                        <div class="apple-text" id="text3"></div>
+                    </div>
+                    <div class="apple-container" id="apple-container2">
+                        <img class="appleIcon4" alt="" src="./img/apple.png" id="image4">
+                        <div class="apple-text" id="text4"></div>
+                    </div>
+                    <div class="apple-container" id="apple-container3">
+                        <img class="appleIcon5" alt="" src="./img/apple.png" id="image5">
+                        <div class="apple-text" id="text5"></div>
+                    </div>
+                    <div class="apple-container" id="apple-container4">
+                        <img class="appleIcon6" alt="" src="./img/apple.png" id="image6">
+                        <div class="apple-text" id="text6"></div>
+                    </div>
+                    <div class="apple-container" id="apple-container5">
+                        <img class="appleIcon8" alt="" src="./img/apple.png" id="image8">
+                        <div class="apple-text" id="text8"></div>
+                    </div>
+                </div>
+                
+            
+        </div>
+    </div>
+
+    <script>
+        const apiUrl = 'https://racconworld.com/api/test/list';
+        const apiTop5Url = 'https://racconworld.com/api/test/list/top5';
+
+        async function fetchData() {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                data.forEach(item => {
+                    const collectionContainer = document.getElementById('collectionContainer');
+                    const cardDiv = document.createElement('div');
+                    cardDiv.className = 'card';
+                    cardDiv.addEventListener('click', () => {
+                        window.location.href = `question.html?test_id=${item.test_id}`;
+                    });
+                    const letterDiv = document.createElement('div');
+                    letterDiv.className = 'a';
+                    letterDiv.textContent = item.letter;
+                    cardDiv.appendChild(letterDiv);
+                    collectionContainer.appendChild(cardDiv);
+                });
+            } catch (error) {
+                console.error('데이터를 가져오는 중 오류 발생:', error);
+            }
+        }
+
+        async function fetchTop5Data() {
+            try {
+                const response = await fetch(apiTop5Url);
+                const data = await response.json();
+
+                data.sort((a, b) => b.views - a.views);
+
+                const appleIcons = [
+                    { id: 'image3', textId: 'text3', testId: data[0].test_id },
+                    { id: 'image4', textId: 'text4', testId: data[1].test_id },
+                    { id: 'image5', textId: 'text5', testId: data[2].test_id },
+                    { id: 'image6', textId: 'text6', testId: data[3].test_id },
+                    { id: 'image8', textId: 'text8', testId: data[4].test_id }
+                ];
+				console.log(appleIcons);
+                appleIcons.forEach((icon, index) => {
+                    const textDiv = document.getElementById(icon.textId);
+                    textDiv.textContent = `${data[index].testName} - ${data[index].views}`;
+
+                    const appleImage = document.getElementById(icon.id);
+                    appleImage.addEventListener('click', () => {
+                        window.location.href = `question.html?test_id=${icon.testId}`;
+                    });
+                });
+            } catch (error) {
+                console.error('Top 5 데이터를 가져오는 중 오류 발생:',
+                error);
+            }
+        }
+
+        window.onload = () => {
+            fetchData();
+            fetchTop5Data();
+        };
+    </script>
+</body>
+</html>

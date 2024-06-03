@@ -2,13 +2,11 @@ package com.racconworld.domain.quizchoice;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.racconworld.domain.quizquestion.QuizQuestion;
-import com.racconworld.domain.test.Test;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.BatchSize;
 
 
 @Entity
@@ -35,7 +33,6 @@ public class QuizChoice {
         this.choice_to_quizquestion = question;
         this.choice = choice;
         this.choice_score = choice_score;
-        this.choice_to_quizquestion.getChoices().add(this);
     }
 
 }

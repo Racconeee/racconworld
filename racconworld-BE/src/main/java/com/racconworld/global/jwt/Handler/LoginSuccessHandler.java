@@ -2,7 +2,6 @@ package com.racconworld.global.jwt.Handler;
 
 import com.racconworld.domain.user.UserRepository;
 import com.racconworld.global.jwt.JwtService;
-import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

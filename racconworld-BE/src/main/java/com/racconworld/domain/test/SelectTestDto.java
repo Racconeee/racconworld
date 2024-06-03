@@ -2,7 +2,6 @@ package com.racconworld.domain.test;
 
 import com.racconworld.domain.quizchoice.QuizChoice;
 import com.racconworld.domain.quizquestion.QuizQuestion;
-import jakarta.persistence.Column;
 import lombok.*;
 
 import java.util.ArrayList;

@@ -9,7 +9,6 @@ import lombok.Getter;
 public class ImguploadDto {
 
 
-
     private String Filename; // 0202에 변경
     private String Filepath;
     private Test result_to_test;

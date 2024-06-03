@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +32,8 @@ public class QuizQuestion {
     @JsonIgnore
     @OneToMany(mappedBy = "choice_to_quizquestion",fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     private List<QuizChoice> choices = new ArrayList<>();
-
-
     private String quiz_question;     //퀴즈 질문 EX)1번 친구만나는데 지갑을 두고온 나는 ?
+
     public String getQuiz_question() {
         return quiz_question;
     }
@@ -47,6 +45,5 @@ public class QuizQuestion {
 
     public void addChoice(QuizChoice choice){
         choices.add(choice);
-
     }
 }

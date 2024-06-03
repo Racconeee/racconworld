@@ -8,6 +8,7 @@ import com.racconworld.domain.quizquestion.QuizQuestionRepository;
 import com.racconworld.domain.test.Test;
 import com.racconworld.domain.test.TestRepository;
 import com.racconworld.global.exception.CustomException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +22,13 @@ public class QuizUploadService {
     private final QuizChoiceRepository quizChoiceRepository;
     private final TestRepository testRepository;
 
+    @Transactional
     public String quiz_upload(List<QuizUploadDto> dtos ,Long test_id){
 
         Test byId = testRepository.findById(test_id).orElseThrow(() -> new CustomException("해당하는 test가 존재하지 않습니다."));
+        if(!byId.getQuestions().isEmpty()){
+            throw new CustomException("이미 저장한 퀴즈와 선택지가 있습니다.");
+        }
 
         for (QuizUploadDto dto : dtos) {
             // QuizQuestion 생성 및 저장

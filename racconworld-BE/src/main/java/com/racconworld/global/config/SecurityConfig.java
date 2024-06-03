@@ -21,6 +21,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -36,16 +38,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable().
-                cors().disable()
+                .csrf().disable()
+                .cors(withDefaults())
                 .httpBasic(basic -> basic
                         .disable())
                 .sessionManagement(sessoin -> sessoin
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
-                        .anyRequest().permitAll()
-                )
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .anyRequest().permitAll())
                 .formLogin().disable();
 
         http.addFilterAfter(customUsernamePasswordAuthenticationFilter(), LogoutFilter.class);

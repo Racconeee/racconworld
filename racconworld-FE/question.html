@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/question.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Zen Dots:wght@400&display=swap"
+    />
+  </head>
+  <body>
+    <div class="question">
+      <div class="question-child">
+        <div class="test-name" id="testName"></div>
+        <div class="quiz_question" id="quizQuestion"></div>
+      </div>
+      <div class="nav">
+        <div class="item-link">
+          <div class="home">Quiz</div>
+        </div>
+      </div>
+      <div class="language">
+        <img class="language-image" alt="" src="./img/language.png" />
+        <b class="en">En</b>
+      </div>
+      <div class="apple-tree">Apple Tree</div>
+
+      <div class="questionLeftContainer" id="questionLeftContainer"></div>
+      <img
+        class="gobackhome"
+        id="gobackhome"
+        alt=""
+        src="./img/gobackhome.png"
+      />
+    </div>
+
+    <script>
+      function getParameterByName(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+      }
+
+      async function fetchQuestionData() {
+        const testId = getParameterByName("test_id");
+        if (!testId) {
+          console.error("test_id가 없습니다.");
+          return;
+        }
+
+        const apiUrl = `https://racconworld.com/api/quiz/${testId}`;
+        console.log(apiUrl);
+
+        try {
+          const response = await fetch(apiUrl);
+          const text = await response.text();
+
+          let data;
+          try {
+            data = JSON.parse(text);
+          } catch (error) {
+            console.error("데이터를 파싱하는 중 오류 발생:", error);
+            return;
+          }
+
+          const testNameDiv = document.getElementById("testName");
+          testNameDiv.textContent = data.testName;
+
+          let currentQuestionIndex = 0;
+          let totalScore = 0;
+          const quizQuestionContainer = document.getElementById("quizQuestion");
+          const questionLeftContainer = document.getElementById(
+            "questionLeftContainer"
+          );
+
+          //              토탈 스코어 100 이하로 만들면 이걸로 실행 할 거야
+
+          //function handleChoiceClick(choiceScore) {
+
+          //     totalScore += choiceScore;
+
+          //     if (totalScore % 10 === 5) {
+          //         totalScore += 5;
+          //     }
+
+          //     if (currentQuestionIndex < data.quizQuestions.length - 1) {
+          //         currentQuestionIndex++;
+          //         displayQuestion(currentQuestionIndex);
+          //     } else if (currentQuestionIndex === data.quizQuestions.length - 1) {
+          //         console.log('모든 질문을 완료했습니다. 총 점수:', totalScore); 
+          //         sendScoreToServer(testId, totalScore);
+          //         currentQuestionIndex++;
+          //     }
+          // }
+          function handleChoiceClick(choiceScore) {
+            totalScore += choiceScore;
+
+            if (totalScore % 10 === 5) {
+              totalScore += 5;
+            }
+
+            if (totalScore > 100) {
+              totalScore /= 2;
+            }
+
+            if (currentQuestionIndex < data.quizQuestions.length - 1) {
+              currentQuestionIndex++;
+              displayQuestion(currentQuestionIndex);
+            } else if (currentQuestionIndex === data.quizQuestions.length - 1) {
+              console.log("모든 질문을 완료했습니다. 총 점수:", totalScore); 
+              sendScoreToServer(testId, totalScore);
+              currentQuestionIndex++;
+            }
+          }
+
+          function displayQuestion(index) {
+            if (index >= data.quizQuestions.length) {
+              console.log("모든 질문을 완료했습니다. 총 점수:", totalScore / 2);
+              return;
+            }
+
+            const question = data.quizQuestions[index];
+
+            quizQuestionContainer.innerHTML = "";
+            questionLeftContainer.innerHTML = "";
+
+            const questionDiv = document.createElement("div");
+            questionDiv.textContent = question.quiz_question;
+            questionDiv.classList.add("quiz_question");
+            quizQuestionContainer.appendChild(questionDiv);
+
+            question.choices.forEach((choice, idx) => {
+              const choiceContainer = document.createElement("div");
+              choiceContainer.classList.add("questionLeft");
+
+              const choiceDiv = document.createElement("div");
+              choiceDiv.textContent = choice.choice;
+              choiceDiv.classList.add("choice");
+              choiceDiv.addEventListener("click", () =>
+                handleChoiceClick(choice.choice_score)
+              );
+
+              choiceContainer.appendChild(choiceDiv);
+              questionLeftContainer.appendChild(choiceContainer);
+            });
+          }
+
+          displayQuestion(currentQuestionIndex);
+        } catch (error) {
+          console.error("데이터를 가져오는 중 오류 발생:", error);
+        }
+      }
+
+      async function sendScoreToServer(testId, score) {
+        const apiUrl = `https://racconworld.com/api/result/${testId}/${score}`;
+        try {
+          const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (response.ok) {
+            const responseData = await response.json();
+            const newUrl = `https://racconworld.com${responseData.filepath}`;
+            updateImageSource(newUrl);
+          } else {
+            const errorMessage = await response.text();
+            console.error(
+              "점수 전송에 실패했습니다. 상태 코드:",
+              response.status,
+              "응답 메시지:",
+              errorMessage
+            );
+          }
+        } catch (error) {
+          console.error("서버에 점수를 보내는 중 오류가 발생했습니다:", error);
+        }
+      }
+
+      function updateImageSource(newUrl) {
+        window.location.href = `result.html?image=${encodeURIComponent(
+          newUrl
+        )}`;
+      }
+
+      var gobackhome = document.getElementById("gobackhome");
+      if (gobackhome) {
+        gobackhome.addEventListener("click", function () {
+          window.location.href = "index.html";
+        });
+      }
+
+      window.onload = fetchQuestionData;
+    </script>
+  </body>
+</html>

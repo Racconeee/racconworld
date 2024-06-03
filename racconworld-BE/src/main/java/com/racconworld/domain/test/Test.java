@@ -3,7 +3,6 @@ package com.racconworld.domain.test;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.racconworld.domain.quizquestion.QuizQuestion;
 import com.racconworld.domain.result.Result;
-import com.racconworld.domain.quizchoice.QuizChoice;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,7 +51,6 @@ public class Test {
                 .test_id(this.id)
                 .testName(this.testName)
                 .views(this.views)
-//                .question_count(this.question_count)
                 .build();
     }
 
@@ -64,8 +62,18 @@ public class Test {
         this.filedownload = filedownload;
     }
 
+    public void test_imgupload(String testName , int question_count, String filepath , String filedownload) {
+        this.testName = testName;
+        this.views = 0L;
+        this.question_count = question_count;
+        this.filepath = filepath;
+        this.filedownload = filedownload;
+    }
+
     public void addQuiz_question(QuizQuestion quizQuestion){
         questions.add(quizQuestion);
     }
+
+
 }
 

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Page</title>
+</head>
+<body>
+    <img id="resultImage" src="" alt="Result Image">
+    
+    <script>
+        // Parse URL query parameters to get the image URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const imageUrl = urlParams.get('image');
+
+        // Update the image source
+        const resultImage = document.getElementById('resultImage');
+        resultImage.src = decodeURIComponent(imageUrl);
+    </script>
+</body>
+</html>

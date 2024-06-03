@@ -1,0 +1,14 @@
+/*.image {
+    width: 706px;
+    height: 656px;
+  }
+  
+  .image .img {
+    position: fixed;
+    width: 706px;
+    height: 656px;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+  }
+  */

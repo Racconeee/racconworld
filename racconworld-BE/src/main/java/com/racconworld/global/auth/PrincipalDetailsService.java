@@ -3,7 +3,6 @@ package com.racconworld.global.auth;
 import com.racconworld.domain.user.User;
 import com.racconworld.domain.user.UserRepository;
 import com.racconworld.global.exception.MemberException;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

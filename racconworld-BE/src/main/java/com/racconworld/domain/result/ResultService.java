@@ -13,7 +13,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ResultService {
 
-    private final ResultRepository resultRepository;
     private final TestRepository testRepository;
 
     /*
@@ -25,7 +24,6 @@ public class ResultService {
     * */
     public ShowResultDto show_result(Long test_id , String score){
 
-
         Test byId = testRepository.findByIdAAndResults(test_id).orElseThrow( () -> new CustomException("해당 테스트가 없습니다."));
 
         Optional<Result> filteredResult = byId.getResults()
@@ -34,9 +32,7 @@ public class ResultService {
                 .findFirst();
 
         Result result = filteredResult.orElseThrow(() -> new CustomException("점수에 대한 파일이 존재하지않습니다."));
-
         ShowResultDto dto = new ShowResultDto(result.getFilepath() , result.getFiledownload());
-
         return dto;
     }
 
